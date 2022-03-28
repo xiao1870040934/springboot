@@ -113,6 +113,18 @@ public class UserServiceImpl implements IUserService {
         }
     }
 
+    @Override
+    public void changeAvatar(Integer uid, String avatar, String username) {
+        User result = userMapper.findByUid(uid);
+        if (result==null || result.getIsDelete().equals(1)){
+            throw new UserNotFoundException("用户数据不存在");
+        }
+        Integer rows=userMapper.updateAvatarByUid(uid,avatar,username,new Date());
+        if (rows!=1){
+            throw new UpdateException("更新用户头像时产生未知的异常");
+        }
+    }
+
     /*定义一个MD5加密算法*/
     private String getMD5Password(String password,String salt){
         for (int i=0;i<3;i++){

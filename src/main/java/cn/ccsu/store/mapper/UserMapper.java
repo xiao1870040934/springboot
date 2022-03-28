@@ -1,6 +1,7 @@
 package cn.ccsu.store.mapper;
 
 import cn.ccsu.store.entity.User;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.Date;
 
@@ -48,4 +49,17 @@ public interface UserMapper {
      * @return 返回值为受影响的行数
      */
     Integer updateInfoByUid(User user);
+
+    /**
+     * 根据用户uid值来修改头像
+     * @param uid 用户id
+     * @param avatar 头像路径
+     * @param modifiedUser 修改者
+     * @param modifiedTime 修改时间
+     * @return
+     */
+    Integer updateAvatarByUid(@Param("uid") Integer uid,
+                              @Param("avatar") String avatar,
+                              @Param("modifiedUser") String modifiedUser,
+                              @Param("modifiedTime") Date modifiedTime);
 }
