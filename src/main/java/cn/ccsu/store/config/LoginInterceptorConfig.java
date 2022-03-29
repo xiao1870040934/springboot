@@ -1,9 +1,11 @@
 package cn.ccsu.store.config;
 
 import cn.ccsu.store.interceptor.LoginInterceptor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
+import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 import java.util.ArrayList;
@@ -18,6 +20,11 @@ import java.util.List;
 @Configuration
 public class LoginInterceptorConfig implements WebMvcConfigurer {
 
+    @Value("${uploadInfo.upload}")
+    private String uploadPattern;
+    @Value("${uploadInfo.location}")
+    private String uploadLocation;
+
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
         //创建自定义的拦截器
@@ -28,6 +35,7 @@ public class LoginInterceptorConfig implements WebMvcConfigurer {
         list.add("/css/**");
         list.add("/images/**");
         list.add("/js/**");
+        list.add("/upload/**");
         list.add("/web/register.html");
         list.add("/web/login.html");
         list.add("/web/index.html");
@@ -38,5 +46,11 @@ public class LoginInterceptorConfig implements WebMvcConfigurer {
         registry.addInterceptor(interceptor)
                 .addPathPatterns("/**")
                 .excludePathPatterns(list);
+    }
+
+    @Override
+    public void addResourceHandlers(ResourceHandlerRegistry registry) {
+        registry.addResourceHandler(uploadPattern)
+                .addResourceLocations("file:" + uploadLocation);
     }
 }

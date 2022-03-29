@@ -2,7 +2,6 @@ package cn.ccsu.store.service;
 
 import cn.ccsu.store.entity.User;
 import cn.ccsu.store.service.ex.ServiceException;
-import cn.ccsu.store.service.impl.UserServiceImpl;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,8 +16,8 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 @SpringBootTest
 @ExtendWith(SpringExtension.class)
 public class UserServiceTest {
-    @Autowired(required=false)
-    private UserServiceImpl userService;
+    @Autowired
+    private IUserService userService;
     @Test
     public void reg(){
         try {

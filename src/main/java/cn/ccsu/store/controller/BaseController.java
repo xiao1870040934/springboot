@@ -2,7 +2,6 @@ package cn.ccsu.store.controller;
 
 import cn.ccsu.store.controller.ex.*;
 import cn.ccsu.store.service.ex.*;
-import cn.ccsu.store.service.impl.UserServiceImpl;
 import cn.ccsu.store.util.JsonResult;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
