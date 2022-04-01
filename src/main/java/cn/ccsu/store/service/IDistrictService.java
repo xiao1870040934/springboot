@@ -16,4 +16,12 @@ public interface IDistrictService {
      * @return 多个区域的信息
      */
     List<District> getByParent(String parent);
+
+
+    /**
+     * 通过代号获取省市区名字
+     * @param code 代号
+     * @return 省市区名字
+     */
+    String getNameByCode(String code);
 }

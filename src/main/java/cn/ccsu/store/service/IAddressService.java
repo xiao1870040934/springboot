@@ -2,6 +2,8 @@ package cn.ccsu.store.service;
 
 import cn.ccsu.store.entity.Address;
 
+import java.util.List;
+
 /**
  * @Author 潇洒哥queen
  * @Date 2022/3/29 19:19
@@ -16,4 +18,7 @@ public interface IAddressService {
      * @param address 用户地址数据
      */
     void addNewAddress(Integer uid, String username, Address address);
+
+    List<Address> getByUid(Integer uid);
+
 }

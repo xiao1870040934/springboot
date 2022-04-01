@@ -148,7 +148,9 @@
 				dataType:"JSON",
 				success:function (json) {
 					if (json.state==200){
+						$(" #form-reg :text").val("");
 						alert("注册成功")
+
 					}else{
 						alert("注册失败")
 					}

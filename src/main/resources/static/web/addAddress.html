@@ -288,6 +288,87 @@
 		</footer>
 		<!--页脚结束-->
 		<script>
+			let defaultOption = "<option value='0'>---请选择---</option>";
+			$(document).ready(function () {
+				showProvinceList();
+				$("#city-list").append(defaultOption);
+				$("#area-list").append(defaultOption);
+			});
+
+			$("#city-list").change(function () {
+				let parent=$("#city-list").val();
+				$("#area-list").empty();
+				$("#area-list").append(defaultOption);
+				if (parent==0){
+					return;
+				}
+				$.ajax({
+					url: "/district/",
+					type: "GET",
+					data: "parent="+parent,
+					dataType: "JSON",
+					success: function (json) {
+						if (json.state == 200) {
+							let list=json.data;
+							for (let i = 0; i < list.length; i++) {
+								let opt="<option value='"+list[i].code+"'>"+list[i].name+"</option>"
+								$("#area-list").append(opt);
+							}
+						} else {
+							alert("县区信息加载失败")
+						}
+					}
+				});
+			});
+
+			$("#province-list").change(function () {
+				let parent=$("#province-list").val();
+				$("#city-list").empty();
+				$("#area-list").empty();
+				$("#city-list").append(defaultOption);
+				$("#area-list").append(defaultOption);
+				if (parent==0){
+					return;
+				}
+				$.ajax({
+					url: "/district/",
+					type: "GET",
+					data: "parent="+parent,
+					dataType: "JSON",
+					success: function (json) {
+						if (json.state == 200) {
+							let list=json.data;
+							for (let i = 0; i < list.length; i++) {
+								let opt="<option value='"+list[i].code+"'>"+list[i].name+"</option>"
+								$("#city-list").append(opt);
+							}
+						} else {
+							alert("城市信息加载失败")
+						}
+					}
+				});
+			});
+
+			function showProvinceList(){
+				$.ajax({
+					url: "/district/",
+					type: "GET",
+					data: "parent=86",
+					dataType: "JSON",
+					success: function (json) {
+						if (json.state == 200) {
+							let list=json.data;
+							for (let i = 0; i < list.length; i++) {
+								let opt="<option value='"+list[i].code+"'>"+list[i].name+"</option>"
+								$("#province-list").append(opt);
+							}
+						} else {
+							alert("省/直辖市信息加载失败")
+						}
+					}
+				});
+			};
+
 			$("#btn-add-new-address").click(function () {
 
 				$.ajax({
