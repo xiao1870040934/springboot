@@ -2,6 +2,7 @@ package cn.ccsu.store.mapper;
 
 import cn.ccsu.store.entity.Address;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -32,4 +33,27 @@ public interface AddressMapper {
      * @return 收货地址数据
      */
     List<Address> findByUid(Integer uid);
+
+    /**
+     * 根据aid查询收货地址数据
+     * @param aid 收货地址id
+     * @return 收货地址数据，如果没有找到返回null
+     */
+    Address findByAid(Integer aid);
+
+    /**
+     * 根据用户的id来修改用户收货地址设置为非默认
+     * @param uid 用户id
+     * @return 受影响的行数
+     */
+    Integer updateNonDefault(Integer uid);
+
+    /**
+     *根据地址id来修改用户收货地址设置为默认
+     * @param aid 地址id
+     * @param modifiedUser 修改者
+     * @param modifiedTime 修改时间
+     * @return 受影响的行数
+     */
+    Integer updateDefault(Integer aid, String modifiedUser, Date modifiedTime);
 }

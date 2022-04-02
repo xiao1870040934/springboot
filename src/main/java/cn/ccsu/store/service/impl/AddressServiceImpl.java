@@ -4,8 +4,7 @@ import cn.ccsu.store.entity.Address;
 import cn.ccsu.store.mapper.AddressMapper;
 import cn.ccsu.store.service.IAddressService;
 import cn.ccsu.store.service.IDistrictService;
-import cn.ccsu.store.service.ex.AddressCountLimitException;
-import cn.ccsu.store.service.ex.InsertException;
+import cn.ccsu.store.service.ex.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -62,8 +61,8 @@ public class AddressServiceImpl implements IAddressService {
     public List<Address> getByUid(Integer uid) {
         List<Address> list=addressMapper.findByUid(uid);
         for (Address t:list ) {
-            t.setAid(null);
-            t.setUid(null);
+            //t.setAid(null);
+            //t.setUid(null);
             t.setProvinceCode(null);
             t.setCityCode(null);
             t.setAreaCode(null);
@@ -76,6 +75,25 @@ public class AddressServiceImpl implements IAddressService {
 
         }
         return list;
+    }
+
+    @Override
+    public void setDefault(Integer aid, Integer uid, String username) {
+        Address address= addressMapper.findByAid(aid);
+        if (address==null){
+            throw new AddressNotFoundException("收货地址不存在");
+        }
+        if (!address.getUid().equals(uid)){
+            throw new AccessDeniedException("非法数据访问");
+        }
+        Integer rows=addressMapper.updateNonDefault(uid);
+        if (rows<1){
+            throw new UpdateException("更新数据产生未知的异常");
+        }
+        rows=addressMapper.updateDefault(aid,username,new Date());
+        if (rows!=1){
+            throw new UpdateException("更新数据产生未知的异常");
+        }
     }
 
 

@@ -27,4 +27,8 @@ public class AddressServiceTest {
         address.setName("男朋友");
         addressService.addNewAddress(7,"管理员",address);
     }
+    @Test
+    public void setDefault(){
+        addressService.setDefault(6,7,"管理员");
+    }
 }

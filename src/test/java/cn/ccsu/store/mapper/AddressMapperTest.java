@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -40,5 +41,20 @@ public class AddressMapperTest {
         for (Address d:list) {
             System.out.println(d);
         }
+    }
+    @Test
+    public void findByAid(){
+       Address address=addressMapper.findByAid(6);
+        System.out.println(address);
+    }
+    @Test
+    public void updateNonDefault(){
+        Integer rows=addressMapper.updateNonDefault(7);
+        System.out.println(rows);
+    }
+    @Test
+    public void updateDefault(){
+        Integer rows=addressMapper.updateDefault(6,"管理员",new Date());
+        System.out.println(rows);
     }
 }
