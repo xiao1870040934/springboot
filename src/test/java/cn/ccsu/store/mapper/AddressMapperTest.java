@@ -57,4 +57,13 @@ public class AddressMapperTest {
         Integer rows=addressMapper.updateDefault(6,"管理员",new Date());
         System.out.println(rows);
     }
+    @Test
+    public void deleteByAid(){
+        addressMapper.deleteByAid(1);
+    }
+    @Test
+    public void findLastModified(){
+        Address address=addressMapper.findLastModified(7);
+        System.out.println(address);
+    }
 }

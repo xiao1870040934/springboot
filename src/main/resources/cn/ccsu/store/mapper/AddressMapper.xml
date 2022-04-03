@@ -50,4 +50,12 @@
     <update id="updateDefault">
         UPDATE t_address SET is_default=1,modified_user=#{modifiedUser},modified_time=#{modifiedTime} WHERE aid=#{aid}
     </update>
+
+    <delete id="deleteByAid">
+        DELETE FROM t_address where aid=#{aid}
+    </delete>
+
+    <select id="findLastModified" resultMap="AddressEntityMap">
+        SELECT * FROM t_address WHERE uid=#{uid} ORDER BY modified_time DESC LIMIT 0,1
+    </select>
 </mapper>

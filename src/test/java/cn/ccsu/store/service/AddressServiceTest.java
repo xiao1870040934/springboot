@@ -31,4 +31,8 @@ public class AddressServiceTest {
     public void setDefault(){
         addressService.setDefault(6,7,"管理员");
     }
+    @Test
+    public void delete(){
+        addressService.delete(4,7,"管理员");
+    }
 }
