@@ -1,5 +1,6 @@
 package cn.ccsu.store.entity;
 
+import java.io.Serializable;
 import java.util.Objects;
 
 /**
@@ -7,7 +8,7 @@ import java.util.Objects;
  * @Date 2022/3/30 19:18
  * @Version 1.0
  */
-public class District extends BaseEntity{
+public class District extends BaseEntity implements Serializable {
     private Integer id;
     private String parent;
     private String code;

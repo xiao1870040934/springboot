@@ -42,6 +42,7 @@ public class LoginInterceptorConfig implements WebMvcConfigurer {
         list.add("/web/product.html");
         list.add("/user/reg");
         list.add("/user/login");
+        list.add("/product/**");
         //完成拦截器的注册
         registry.addInterceptor(interceptor)
                 .addPathPatterns("/**")

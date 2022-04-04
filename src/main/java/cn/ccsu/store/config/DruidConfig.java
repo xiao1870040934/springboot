@@ -26,14 +26,12 @@ public class DruidConfig {
         return new DruidDataSource();
     }
 
-    @Bean  //这里其实就相当于servlet的web.xml
+    @Bean
     public ServletRegistrationBean statViewServlet(){
         ServletRegistrationBean<StatViewServlet> bean =
                 new ServletRegistrationBean<StatViewServlet>(new StatViewServlet(),"/druid/*");
 
-        //后台需要有人登录，进行配置
-        //bean.addUrlMappings(); 这个可以添加映射，我们在构造里已经写了
-        //设置一些初始化参数
+
         Map<String,String> initParas = new HashMap<String,String>();
         initParas.put("loginUsername","admin");//它这个账户密码是固定的
         initParas.put("loginPassword","123456");

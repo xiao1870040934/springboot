@@ -1,5 +1,6 @@
 package cn.ccsu.store.entity;
 
+import java.io.Serializable;
 import java.util.Objects;
 
 /**
@@ -8,7 +9,7 @@ import java.util.Objects;
  * @Version 1.0
  * 收货地址数据的实体
  */
-public class Address extends BaseEntity{
+public class Address extends BaseEntity implements Serializable {
     private Integer aid;
     private Integer uid;
     private String name;
