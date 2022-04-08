@@ -96,7 +96,7 @@
 						<p class="panel-title"><span class="fa fa-shopping-cart"></span> 购物车</p>
 					</div>
 					<div class="panel-body">
-						<form action="orderConfirm.html" role="form">
+						<form action="orderConfirm.html" role="form" id="cart-form-list">
 							<!--购物车表格开始-->
 							<table class="cart-table" width="100%">
 								<thead>
@@ -174,7 +174,7 @@
 							</div>
 							<div>
 								<span class="pull-right">
-								<input type="submit" value="  结  算  " class="btn btn-primary btn-lg link-account" />
+								<input type="button" value="  结  算  " class="btn btn-primary btn-lg link-account" />
 							</span>
 							</div>
 						</form>
@@ -273,7 +273,17 @@
 			});
 			//返回链接
 			$(".link-account").click(function() {
-				location.href = "orderConfirm.html";
+				let chk_value =[];
+				$('input[name="cids"]:checked').each(function(){
+					chk_value.push($(this).val());
+				});
+				console.log(chk_value.length)
+				if (chk_value.length==0){
+					return;
+				}else {
+					//location.href = "orderConfirm.html";
+					$('#cart-form-list').submit();
+				}
 			});
 
 			function showCartList() {
@@ -293,7 +303,7 @@
 									+ '<td>#{title}#{msg}</td>'
 									+ '<td>¥<span id="price-#{cid}">#{realPrice}</span></td>'
 									+ '<td>'
-									+     '<input type="button" value="-" class="num-btn" onclick="reduceNum(1)" />'
+									+     '<input type="button" value="-" class="num-btn" onclick="reduceNum(#{cid})" />'
 									+     '<input id="num-#{cid}" type="text" size="2" readonly="readonly" class="num-text" value="#{num}">'
 									+     '<input class="num-btn" type="button" value="+" onclick="addNum(#{cid})" />'
 									+ '</td>'
@@ -322,7 +332,7 @@
 
 			function addNum(cid) {
 				$.ajax({
-					url: "/cart/num/add" + cid,
+					url: "/cart/num/add/" + cid,
 					type: "POST",
 					dataType: "JSON",
 					success: function(json) {
@@ -341,6 +351,38 @@
 						location.href = "login.html";
 					}
 				});
+			}
+
+			function reduceNum(cid){
+				let num=document.querySelector(`#num-${cid}`).value;
+				if (num==1){
+					alert('最少购买一件')
+				}else {
+					$.ajax({
+						url: "/cart/num/reduce/" + cid,
+						type: "POST",
+						dataType: "JSON",
+						success: function(json) {
+							if (json.state == 200) {
+								// showCartList();
+								$("#num-" + cid).val(json.data);
+								let price = $("#price-" + cid).html();
+								let totalPrice = price * json.data;
+								$("#total-price-" + cid).html(totalPrice);
+							} else {
+								alert("减少商品数量失败！" + json.message);
+							}
+						},
+						error: function(xhr) {
+							alert("您的登录信息已经过期，请重新登录！HTTP响应码：" + xhr.status);
+							location.href = "login.html";
+						}
+					});
+				}
+			}
+
+			function checkall(ckbtn) {
+				$(".ckitem").prop("checked", $(ckbtn).prop("checked"));
 			}
 		</script>
 	</body>
